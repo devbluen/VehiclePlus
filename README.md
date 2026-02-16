@@ -12,7 +12,7 @@ SetVehicleBonnet(vehicleid, bool:status) OR SetVehicleCapo(vehicleid, bool:statu
 SetVehicleBoot(vehicleid, bool:status) OR SetVehiclePortaMalas(vehicleid, bool:status)
 //
 GetVehicleColor(vehicleid, &color1, &color2 = (optional))
-GetVehicleStatusMotor(vehicleid) OR GetVehicleStatusEngine(vehicleid)
+GetVehicleStatusEngine(vehicleid) OR GetVehicleStatusMotor(vehicleid)
 GetVehicleStatusDoor(vehicleid) OR GetVehicleStatusPorta(vehicleid)
 GetVehicleStatusLight(vehicleid) OR GetVehicleStatusLuz(vehicleid)
 GetVehicleStatusAlarm(vehicleid) OR GetVehicleStatusAlarme(vehicleid)
