@@ -1,4 +1,14 @@
 
+/*
+    Created by devbluen
+    Repo: https://github.com/devbluen/VehiclePlus
+*/
+
+#if defined VehiclePlus_included
+	#endinput
+#endif
+#define VehiclePlus_included
+
             // Definers
 #define         MAX_VEHICLE_PLATE       (18)
 
@@ -32,7 +42,25 @@ static enum E_VEHICLE_PLUS {
     bool:E_VEHICLE_BOOT     // Porta Malas [PT-BR]
 };
 
-static e_VehiclePlus[MAX_VEHICLES][E_VEHICLE_PLUS];
+static 
+    e_VehiclePlus[MAX_VEHICLES][E_VEHICLE_PLUS]
+;
+
+static const 
+    VehTopSpeed[212] = {
+        157, 147, 186, 110, 133, 164, 110, 148, 100, 158, 129, 221, 168, 110, 105, 192, 154, 270,
+        115, 149, 145, 154, 140, 99, 135, 270, 173, 165, 157, 201, 190, 130, 94, 110, 167, 0, 149,
+        158, 142, 168, 136, 145, 139, 126, 110, 164, 270, 270, 111, 0, 0, 193, 270, 60, 135, 157,
+        106, 95, 157, 136, 270, 160, 111, 142, 145, 145, 147, 140, 144, 270, 157, 110, 190, 190,
+        149, 173, 270, 186, 117, 140, 184, 73, 156, 122, 190, 99, 64, 270, 270, 139, 157, 149, 140,
+        270, 214, 176, 162, 270, 108, 123, 140, 145, 216, 216, 173, 140, 179, 166, 108, 79, 101, 270,
+        270, 270, 120, 142, 157, 157, 164, 270, 270, 160, 176, 151, 130, 160, 158, 149, 176, 149, 60,
+        70, 110, 167, 168, 158, 173, 0, 0, 270, 149, 203, 164, 151, 150, 147, 149, 142, 270, 153, 145,
+        157, 121, 270, 144, 158, 113, 113, 156, 178, 169, 154, 178, 270, 145, 165, 160, 173, 146, 0, 0,
+        93, 60, 110, 60, 158, 158, 270, 130, 158, 153, 151, 136, 85, 0, 153, 142, 165, 108, 162, 0, 0,
+        270, 270, 130, 190, 175, 175, 175, 158, 151, 110, 169, 171, 148, 152, 0, 0, 0, 108, 0, 0
+    }
+;
 
 
 
@@ -142,7 +170,7 @@ stock SetVehicleColor(vehicleid, color1, color2) {
     alsChangeVehicleColor(vehicleid, color1, color2);
 }
 
-stock GetVehicleColor(vehicleid, &color1, &color2 = 0) {
+stock alsGetVehicleColor(vehicleid, &color1, &color2 = 0) {
 
     color1 = e_VehiclePlus[vehicleid][E_VEHICLE_COLOR_1];
     color2 = e_VehiclePlus[vehicleid][E_VEHICLE_COLOR_2];
@@ -257,6 +285,87 @@ static stock CreateVehicle_ConfigData(vehicleid, Float:x, Float:y, Float:z, Floa
     CallLocalFunction("OnVehicleConnect", "i", vehicleid);   
 }
 
+stock IsVehicleFlyingVehicle(modelid) {
+
+    switch(modelid) {
+        case 592, 577, 511, 512, 593, 520, 553, 476, 519, 460, 513, 548, 425, 417, 487, 488, 497, 563, 447, 469: return true;
+    }
+    return false;
+}
+
+stock IsVehicleBoat(modelid) {
+
+    switch(modelid) {
+        case 472, 473, 493, 484, 430, 453, 452, 446, 454, 595: return true;
+    }
+    return false;
+}
+
+stock IsVehicleBike(modelid) {
+    
+    switch(modelid) {
+        case 481, 509, 510: return true;
+    }
+    return false;
+}
+
+stock IsVehicleMotorcycle(modelid) {
+
+    switch(modelid) {
+        case 461, 462, 448, 522, 581, 521, 523, 463, 586, 468, 471: return true;
+    }
+    return false;
+}
+
+stock IsVehicleTruck(modelid) {
+
+    switch(modelid) {
+        case 403, 406, 407, 408, 414, 416, 427, 433, 443, 455, 456, 498, 508, 514, 515, 524, 573, 578, 428: return true;
+    }
+    return false;
+}
+
+stock IsVehicleBus(modelid) {
+
+    switch(modelid) {
+        case 431, 437: return true;
+    }
+    return false;
+}
+
+stock IsVehicleHelicopter(modelid) {
+
+    switch(modelid) {
+        case 425, 469, 487, 488, 497, 548, 563: return true;
+    }
+    return false;
+}
+
+stock IsVehicleTrain(modelid) {
+
+    switch(modelid) {
+        case 538, 537, 449, 570: return true;
+    }
+    return false;
+}
+
+stock bool:IsVehicleLand(modelid)
+    return !IsVehicleBoat(modelid) && !IsVehicleFlyingVehicle(modelid) && !IsVehicleBike(modelid);
+
+stock bool:IsVehicleCar(modelid) 
+    return !IsVehicleBoat(modelid) && !IsVehicleFlyingVehicle(modelid) && !IsVehicleBike(modelid) && !IsVehicleMotorcycle(modelid);
+
+stock GetVehicleTopSpeed(vehicleid)
+    return GetVehicleTopSpeedModel(GetVehicleModel(vehicleid));   
+
+
+stock GetVehicleTopSpeedModel(model) {
+    if(model) 
+        return VehTopSpeed[(model - 400)];
+
+    return 0;
+}
+
 
 
 /*
@@ -318,6 +427,14 @@ static stock CreateVehicle_ConfigData(vehicleid, Float:x, Float:y, Float:z, Floa
 #endif
  
 #define DestroyVehicle alsDestroyVehicle
+
+#if defined _ALS_GetVehicleColor
+    #undef GetVehicleColor
+#else
+    #define _ALS_GetVehicleColor
+#endif
+ 
+#define GetVehicleColor alsGetVehicleColor
 
 #if defined _ALS_OnVehicleStreamIn
     #undef OnVehicleStreamIn
