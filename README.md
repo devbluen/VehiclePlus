@@ -18,6 +18,20 @@ GetVehicleStatusLight(vehicleid) OR GetVehicleStatusLuz(vehicleid)
 GetVehicleStatusAlarm(vehicleid) OR GetVehicleStatusAlarme(vehicleid)
 GetVehicleStatusBonnet(vehicleid) OR GetVehicleStatusCapo(vehicleid)
 GetVehicleStatusBoot(vehicleid) OR GetVehicleStatusPortaMalas(vehicleid)
+//
+IsVehicleFlyingVehicle(modelid)
+IsVehicleBoat(modelid)
+IsVehicleBike(modelid)
+IsVehicleMotorcycle(modelid)
+IsVehicleTruck(modelid)
+IsVehicleBus(modelid)
+IsVehicleHelicopter(modelid)
+IsVehicleTrain(modelid)
+IsVehicleLand(modelid)
+IsVehicleCar(modelid)
+//
+GetVehicleTopSpeed(vehicleid)
+GetVehicleTopSpeedModel(model)
 ```
 
 ## 🫧 New Callbacks
